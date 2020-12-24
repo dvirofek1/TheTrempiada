@@ -97,6 +97,9 @@ public class EditTremp extends AppCompatActivity {
         this.okB.setOnClickListener(x->validateForm());
         this.delB.setOnClickListener(x->delBClicked());
         this.phoneBtn.setOnClickListener(x->phoneBtnClicked());
+        this.trempB.setText(""+this.numOfTrempists);
+        int carIndex = getCarIndex();
+
         this.dateB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +137,11 @@ public class EditTremp extends AppCompatActivity {
                 driver.getVehicleIds());
 
         spinner.setAdapter(adapter);
-        spinner.setSelection(findVehicle(tremp.getVehicle()));
+        if(carIndex > driver.getVehicleIds().size()-1)
+            carIndex = 0;
+        spinner.setSelection(carIndex);
+
+
 
 
     }
@@ -175,12 +182,29 @@ public class EditTremp extends AppCompatActivity {
         this.hour = tremp.getDateTime().hour;
         this.min = tremp.getDateTime().min;
 
+
+
         if(b!=null)
         {
             src = new LatLng(b.getDouble("srcLat"),b.getDouble("srcLon"));
             srcT.setText(src.toString());
 
         }
+    }
+
+    private int getCarIndex() {
+        int counter= 0;
+        Log.w("-----------",""+tremp.getVehicle().getVehicleId());
+        for(Vehicle x : driver.getVehicleIds()){
+            Log.w("!!!!!!!!!!!!",""+x.getVehicleId());
+            if(x.getVehicleId() == tremp.getVehicle().getVehicleId())
+                break;
+            else
+                counter++;
+
+        }
+        Log.w("-----------",""+counter);
+        return counter;
     }
 
     private int findVehicle(Vehicle vehicle) {

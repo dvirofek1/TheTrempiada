@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.thetrempiada.FirebaseAuthentication;
 import com.example.thetrempiada.FirebaseDB;
 import com.example.thetrempiada.R;
+import com.example.thetrempiada.RowAdapter;
+import com.example.thetrempiada.RowAdapterDriver;
 import com.example.thetrempiada.SimpleCallback;
 import com.example.thetrempiada.editProfile.Vehicle;
 import com.example.thetrempiada.users.DriverUser;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 
 public class MyTremps extends AppCompatActivity {
 
-    ArrayAdapter<MyTrempObj> adapter;
+    RowAdapterDriver adapter;
     private DriverTremp myTremps;
     private ListView listB;
     private Spinner sortS;
@@ -79,13 +81,38 @@ public class MyTremps extends AppCompatActivity {
     }
 
     private void updateUI(){
-        adapter=new ArrayAdapter<MyTrempObj>(this,
-                android.R.layout.simple_list_item_1,myTrempsLst
-        );
+        adapter=new RowAdapterDriver(this, myTrempsLst, null, new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer data1, Exception error) {
+                FirebaseDB.getInstance().getRegisteredTrempists(myTrempsLst.get(data1), new SimpleCallback<ArrayList<UserPhone>>() {
+                    @Override
+                    public void callback(ArrayList<UserPhone> data, Exception error) {
+                        if (error == null) {
+                            Intent intent = new Intent(MyTremps.this, EditTremp.class);
+                            intent.putExtra("tremp", myTrempsLst.get(data1));
+                            intent.putExtra("driver", driver);
+                            intent.putExtra("trempists", data);
+                            startActivity(intent);
+                        } else
+                            Toast.makeText(MyTremps.this, error.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                });
+            }
+        });
+        adapter.setDelete(new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer data, Exception error) {
+                FirebaseDB.getInstance().delTremp(myTrempsLst.get(data));
+                myTrempsLst.remove(data.intValue());
+                Toast.makeText(MyTremps.this,"Tremp deleted",Toast.LENGTH_LONG).show();
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         listB.setAdapter(adapter);
 
-        listB.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*listB.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int pos, long id) {
@@ -108,7 +135,7 @@ public class MyTremps extends AppCompatActivity {
 
                 return true;
             }
-        });
+        });*/
 
         ArrayAdapter<CharSequence> adapterS = ArrayAdapter.createFromResource(this,
                 R.array.sortOptions, android.R.layout.simple_spinner_item);

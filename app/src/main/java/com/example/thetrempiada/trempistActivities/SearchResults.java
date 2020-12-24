@@ -1,6 +1,7 @@
 package com.example.thetrempiada.trempistActivities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.thetrempiada.FirebaseDB;
 import com.example.thetrempiada.R;
+import com.example.thetrempiada.RowAdapterSearchTremp;
 import com.example.thetrempiada.SimpleCallback;
 import com.example.thetrempiada.driverActivities.AddTrip;
 import com.example.thetrempiada.driverActivities.LanLat;
@@ -34,7 +36,7 @@ public class SearchResults extends AppCompatActivity {
     private ArrayList<MyTrempObj> tremps;
     private TrempistUser trempist;
     private ListView listV;
-    ArrayAdapter<MyTrempObj> adapter;
+    RowAdapterSearchTremp adapter;
     int choosedIndex = -1;
     private Spinner srcS;
     private LanLat src;
@@ -49,6 +51,7 @@ public class SearchResults extends AppCompatActivity {
         this.tremps = (ArrayList<MyTrempObj>) (getIntent().getExtras().get("tremps"));
         this.srcS = findViewById(R.id.srcS);
         this.src = (LanLat) (getIntent().getExtras().get("src"));
+
     }
 
 
@@ -60,10 +63,13 @@ public class SearchResults extends AppCompatActivity {
         adapterSrc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.srcS.setAdapter(adapterSrc);
 
-        listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+
+        adapter=new RowAdapterSearchTremp(SearchResults.this, tremps, new SimpleCallback<Integer>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                choosedIndex = position;
+            public void callback(Integer data, Exception error) {
+                choosedIndex = data.intValue();
                 FirebaseDB db = FirebaseDB.getInstance();
                 db.joinTremp(tremps.get(choosedIndex), trempist, new SimpleCallback<Boolean>() {
                     @Override
@@ -73,28 +79,26 @@ public class SearchResults extends AppCompatActivity {
                     }
                 });
             }
-
-
-        });
-
-        listV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        }, new SimpleCallback<Integer>() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
+            public void callback(Integer data, Exception error) {
                 Intent intent = new Intent(SearchResults.this, mapActivityForSearch.class);
-                intent.putExtra("src",tremps.get(pos).getSrc());
-                intent.putExtra("dst",tremps.get(pos).getDst());
+                intent.putExtra("src", tremps.get(data).getSrc());
+                intent.putExtra("dst", tremps.get(data).getDst());
                 startActivity(intent);
-                return true;
+            }
+        }, new SimpleCallback<Integer>() {
+            @Override
+            public void callback(Integer data, Exception error) {
+                choosedIndex = data.intValue();
+                String driverPhone = tremps.get(choosedIndex).getDriver_phone();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+driverPhone));
+                startActivity(intent);
             }
         });
 
-
-        adapter=new ArrayAdapter<MyTrempObj>(this,
-                android.R.layout.simple_list_item_1,
-                tremps);
-
-        listV.setAdapter(adapter);
+                listV.setAdapter(adapter);
         srcS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

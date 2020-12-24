@@ -139,6 +139,7 @@ public class FirebaseDB {
     }
 
     public Task<Void> updateUser(User user) {
+        // update in user document first
         if (user.getType() == UserType.DRIVER) {
             DriverUser driver = (DriverUser) user;
             ref.child("users").child(user.getId()).setValue(driver);
@@ -147,6 +148,7 @@ public class FirebaseDB {
                 public ArrayList<Vehicle> vehiclesId = driver.getVehicleIds();
             };
 
+            //looking for driverId in tremps that equals to user id
             ref.child("tremps").orderByChild("trempId").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -169,6 +171,7 @@ public class FirebaseDB {
                 }
             });
 
+            //get the tremps of the user in O(1) and update the relevent information
             getDriverTremp(user.getId(), new SimpleCallback<DriverTremp>() {
                 @Override
                 public void callback(DriverTremp data, Exception error) {
@@ -179,6 +182,8 @@ public class FirebaseDB {
                         x.setDriver_phone(String.valueOf(user.getPhone()));
                         x.setDriver_lname(user.getLastName());
                         myTremps.add(x);
+
+                        //update in the trempists that registered to this tremp
                         ref.child("trempist-tremp").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -216,6 +221,8 @@ public class FirebaseDB {
 
 
             return ref.child("users-vehicles").child(user.getId()).setValue(myobj);
+
+            // if trempist-> update in all of the tremps of the trempist
         } else {
             ref.child("trempist-tremp").orderByChild("uid").equalTo(user.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -244,9 +251,11 @@ public class FirebaseDB {
         return ref.child("tremps").child(id).setValue(t);
     }
 
+
     public void updateTremp(Tremp t) {
         ref.child("tremps").child(t.getTrempId()).setValue(t);
 
+        //update tremp in drivers-tremps
         getDriverTremp(t.getDriverId(), new SimpleCallback<DriverTremp>() {
             @Override
             public void callback(DriverTremp data, Exception error) {
@@ -270,6 +279,8 @@ public class FirebaseDB {
                     ref.child("drivers-tremps").child(data.getId()).setValue(data);
                 }
                 ref = database.getReference();
+
+                //update the tremp in trempist-tremp
                 ref.child("trempist-tremp")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -309,6 +320,7 @@ public class FirebaseDB {
 
     }
 
+    //write driver in driver-tremps
     public void writeUserTremp(Tremp t, String uid, SimpleCallback<Boolean> callback) {
         ref.child("drivers-tremps").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -365,7 +377,7 @@ public class FirebaseDB {
         });
     }
 
-
+    //foreach tremp in treps, try to apply the condition (passQuery)
     public void solveSearchQuery(SearchQuery query, SimpleCallback<ArrayList<Tremp>> callback) {
 
         ref.child("tremps")
@@ -439,6 +451,8 @@ public class FirebaseDB {
         return (rad * 180.0 / Math.PI);
     }
 
+
+
     public void getTrempistTremps(String uid, SimpleCallback<TrempistTremp> callback){
         ref.child("trempist-tremp").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -456,6 +470,7 @@ public class FirebaseDB {
     }
 
 
+    //loop over the tremps of the trempist, find the specific tremp, and delete.
     public void unregisterTremp(String trempistId,Tremp tremp){
         ref.child("trempist-tremp").child(trempistId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -476,6 +491,8 @@ public class FirebaseDB {
             }
         });
     }
+
+
 
     public void getDriverTremp(String uid, SimpleCallback<DriverTremp> callback) {
         ref.child("drivers-tremps").orderByChild("id").equalTo(uid).limitToFirst(1).addChildEventListener(new ChildEventListener() {
@@ -509,6 +526,8 @@ public class FirebaseDB {
 
     }
 
+    //iterate over trempist-tremp-> put int map[trempId, number of users]
+    // then return map[trempId]
     public void getFreeSpacesOfTremps(ArrayList<MyTrempObj> p, SimpleCallback<Boolean> callback) {
         Map<String, Integer> trempMap = new HashMap<String, Integer>();
         ref = this.database.getReference();
@@ -542,6 +561,8 @@ public class FirebaseDB {
 
     }
 
+    //first delete from tremps document. then, get the driver that hold this tremp and delete the
+    // tremp from the driver-tremp table.
     public void delTremp(Tremp t) {
         ref.child("tremps").child(t.getTrempId()).removeValue();
 
@@ -568,6 +589,8 @@ public class FirebaseDB {
                     ref.child("drivers-tremps").child(data.getId()).setValue(data);
                 }
                 ref = database.getReference();
+
+                //then find the trempists that registerd to this tremp and delete the tremp.
                 ref.child("trempist-tremp")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -607,6 +630,7 @@ public class FirebaseDB {
 
     }
 
+    //iterate over trempist-tremp and find the registered trempists.
     public void getRegisteredTrempists(Tremp t, SimpleCallback<ArrayList<UserPhone>> callback) {
         ArrayList<UserPhone> userPhone = new ArrayList<>();
         ref.child("trempist-tremp")
@@ -636,6 +660,7 @@ public class FirebaseDB {
                 });
     }
 
+    //find the tremps of trempist in O(1)
     public void myTrempsTrempist(String uid,SimpleCallback<ArrayList<Tremp>> callback){
         ref.child("trempist-tremp").orderByChild("uid").equalTo(uid).limitToFirst(1).addChildEventListener(new ChildEventListener(){
 

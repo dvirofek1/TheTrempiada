@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2196F3"
+        android:background="@drawable/bg_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,26 +22,26 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="27dp"
-            android:layout_marginLeft="27dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="113dp"
+            android:layout_marginLeft="113dp"
+            android:layout_marginTop="26dp"
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/profileBtn"
+            android:id="@+id/SearchTremp"
             android:layout_width="162dp"
             android:layout_height="122dp"
             android:layout_above="@+id/loginGoogle"
             android:layout_alignEnd="@+id/loginGoogle"
             android:layout_alignRight="@+id/loginGoogle"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="350dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#FFFFFF"
-            android:drawableLeft="@android:drawable/ic_menu_edit"
-            android:text="Profile"
+            android:drawableLeft="@android:drawable/ic_menu_myplaces"
+            android:text="Add trip"
             android:textColor="#000000"
             app:backgroundTint="#FFFFFF" />
 
@@ -54,7 +54,7 @@
             android:layout_alignRight="@+id/loginGoogle"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="500dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#FFFFFF"
@@ -64,22 +64,34 @@
             app:backgroundTint="#FFFFFF" />
 
         <Button
-            android:id="@+id/SearchTremp"
+            android:id="@+id/profileBtn"
             android:layout_width="162dp"
             android:layout_height="122dp"
             android:layout_above="@+id/loginGoogle"
             android:layout_alignEnd="@+id/loginGoogle"
             android:layout_alignRight="@+id/loginGoogle"
-            android:layout_marginStart="220dp"
-            android:layout_marginLeft="220dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="350dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#FFFFFF"
-            android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:text="Add trip"
+            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:text="Profile"
             android:textColor="#000000"
             app:backgroundTint="#FFFFFF" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="317dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-2dp"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="26dp"
+            app:srcCompat="@drawable/logo" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

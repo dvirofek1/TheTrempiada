@@ -9,11 +9,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2196F3"
+        android:background="@drawable/bg_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="317dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="23dp"
+            app:srcCompat="@drawable/logo" />
 
         <TextView
             android:id="@+id/textName"
@@ -22,9 +34,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="27dp"
-            android:layout_marginLeft="27dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="105dp"
+            android:layout_marginLeft="105dp"
+            android:layout_marginTop="26dp"
             android:textSize="24sp" />
 
         <Button
@@ -36,7 +48,7 @@
             android:layout_alignRight="@+id/loginGoogle"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="350dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#FFFFFF"
@@ -54,7 +66,7 @@
             android:layout_alignRight="@+id/loginGoogle"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="330dp"
+            android:layout_marginTop="500dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#FFFFFF"
@@ -72,7 +84,7 @@
             android:layout_alignRight="@+id/loginGoogle"
             android:layout_marginStart="220dp"
             android:layout_marginLeft="220dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="350dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="#FFFFFF"

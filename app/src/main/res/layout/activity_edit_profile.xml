@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_header_selector"><![CDATA[>
+        android:background="@drawable/bg_app"><![CDATA[>
 
         ]]>
 
@@ -53,9 +53,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="69dp"
             android:fontFamily="sans-serif-medium"
-            android:shadowColor="#616161"
+            android:shadowColor="#686868"
             android:text="E-mail"
-            android:textColor="#B3B3B3"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -70,9 +70,9 @@
             android:layout_marginLeft="23dp"
             android:layout_marginTop="145dp"
             android:fontFamily="sans-serif-medium"
-            android:shadowColor="#616161"
+            android:shadowColor="#686868"
             android:text="Type"
-            android:textColor="#B3B3B3"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -87,9 +87,9 @@
             android:layout_marginLeft="21dp"
             android:layout_marginTop="237dp"
             android:fontFamily="sans-serif-medium"
-            android:shadowColor="#616161"
+            android:shadowColor="#686868"
             android:text="First name"
-            android:textColor="#B3B3B3"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -104,9 +104,9 @@
             android:layout_marginLeft="23dp"
             android:layout_marginTop="313dp"
             android:fontFamily="sans-serif-medium"
-            android:shadowColor="#616161"
+            android:shadowColor="#686868"
             android:text="Last name"
-            android:textColor="#B3B3B3"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -121,9 +121,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="528dp"
             android:fontFamily="sans-serif-medium"
-            android:shadowColor="#616161"
+            android:shadowColor="#686868"
             android:text="My Vehicles"
-            android:textColor="#B3B3B3"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -138,9 +138,9 @@
             android:layout_marginLeft="23dp"
             android:layout_marginTop="401dp"
             android:fontFamily="sans-serif-medium"
-            android:shadowColor="#616161"
+            android:shadowColor="#686868"
             android:text="Phone"
-            android:textColor="#B3B3B3"
+            android:textColor="#808080"
             android:textSize="18sp"
             android:textStyle="bold" />
 

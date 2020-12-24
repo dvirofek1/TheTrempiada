@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -41,7 +42,8 @@ public class ActivitySearchTremp extends AppCompatActivity {
     private TextView srcT, dstT;
     private TrempistUser user;
     private Spinner srcS, dstS;
-    private Button srcBtn, dstBtn, okB, timeB, dateB;
+    private ImageButton srcBtn, dstBtn, timeB, dateB;
+    private Button okB;
     private final int PLACE_PICKER_REQ_SRC = 1;
     private final int PLACE_PICKER_REQ_DST = 2;
     private LatLng src, dst;
